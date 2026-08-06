@@ -1,0 +1,22 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "zentrik",
+  "version": "1.2.0",
+  "description": "Bring your team's product decisions and customer evidence into AI agents.",
+  "author": {
+    "name": "Zentrik",
+    "email": "support@zentrik.ai",
+    "url": "https://zentrik.ai"
+  },
+  "homepage": "https://zentrik.ai/docs/integrations/mcp",
+  "repository": "https://github.com/Zentrik-AI/agent-plugins",
+  "license": "Apache-2.0",
+  "keywords": [
+    "product-management",
+    "customer-evidence",
+    "customer-feedback",
+    "user-research",
+    "product-discovery",
+    "mcp"
+  ]
+}

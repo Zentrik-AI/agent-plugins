@@ -1,0 +1,71 @@
+name: Validate Agent Plugin
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Validate portable package
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+
+          const expectedSkills = [
+            'brief-product-work',
+            'import-product-evidence',
+            'set-up-product-workspace',
+          ];
+          const fail = (message) => {
+            console.error(`FAIL ${message}`);
+            process.exitCode = 1;
+          };
+          const pass = (message) => console.log(`PASS ${message}`);
+          const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
+
+          const manifest = readJson('plugin.json');
+          if (manifest.$schema !== 'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json') fail('plugin schema');
+          if (manifest.name !== 'zentrik') fail('plugin name');
+          if (!/^\d+\.\d+\.\d+$/.test(manifest.version)) fail('plugin version');
+          if (Object.keys(manifest).some((key) => !['$schema', 'name', 'version', 'description', 'author', 'homepage', 'repository', 'license', 'keywords', 'extensions'].includes(key))) fail('plugin fields');
+          pass('plugin manifest');
+
+          const marketplace = readJson('.agents/plugins/marketplace.json');
+          const marketplaceEntry = marketplace.plugins?.find((plugin) => plugin.name === 'zentrik');
+          if (marketplace.name !== 'zentrik-agent-plugins') fail('Codex marketplace name');
+          if (marketplaceEntry?.source?.source !== 'local' || marketplaceEntry?.source?.path !== './') fail('Codex marketplace package path');
+          if (marketplaceEntry?.policy?.installation !== 'AVAILABLE' || marketplaceEntry?.policy?.authentication !== 'ON_INSTALL') fail('Codex marketplace policies');
+          pass('Codex marketplace catalog');
+
+          const mcp = readJson('mcp.json');
+          const server = mcp.mcpServers?.zentrik;
+          if (mcp.$schema !== 'https://agent-plugins.org/schemas/1.0.0/mcp.schema.json') fail('MCP schema');
+          if (server?.type !== 'streamable-http' || server?.url !== 'https://zentrik.ai/mcp') fail('MCP server');
+          if (JSON.stringify(mcp).match(/token|password|secret|api[_-]?key|authorization/i)) fail('MCP credential material');
+          pass('MCP configuration');
+
+          const actualSkills = fs.readdirSync('skills', { withFileTypes: true }).filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
+          if (JSON.stringify(actualSkills) !== JSON.stringify([...expectedSkills].sort())) fail('skill set');
+          for (const skill of expectedSkills) {
+            const file = path.join('skills', skill, 'SKILL.md');
+            const content = fs.readFileSync(file, 'utf8');
+            if (!content.match(new RegExp(`^---\\nname: ${skill}\\n`))) fail(`${skill} frontmatter name`);
+            if (!content.match(/^description: .+$/m)) fail(`${skill} description`);
+            if (content.match(/\bClaude\b|mcp__plugin_|mcp__zentrik__/i)) fail(`${skill} client neutrality`);
+          }
+          pass('Agent Skills package');
+          if (!fs.existsSync('LICENSE') || !fs.existsSync('NOTICE')) fail('legal files');
+          pass('legal files');
+          if (process.exitCode) process.exit(1);
+          NODE
