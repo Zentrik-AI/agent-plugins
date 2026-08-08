@@ -8,7 +8,7 @@
       "name": "zentrik",
       "source": {
         "source": "local",
-        "path": "./"
+        "path": "./com.openai/zentrik"
       },
       "policy": {
         "installation": "AVAILABLE",

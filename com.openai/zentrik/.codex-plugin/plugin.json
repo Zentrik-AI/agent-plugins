@@ -1,0 +1,47 @@
+{
+  "name": "zentrik",
+  "version": "1.3.0",
+  "description": "Bring your team's product decisions and customer evidence into ChatGPT and Codex.",
+  "author": {
+    "name": "Zentrik",
+    "email": "support@zentrik.ai",
+    "url": "https://zentrik.ai"
+  },
+  "homepage": "https://zentrik.ai/docs/integrations/mcp-chatgpt",
+  "repository": "https://github.com/Zentrik-AI/agent-plugins",
+  "license": "Apache-2.0",
+  "keywords": [
+    "product-management",
+    "customer-evidence",
+    "customer-feedback",
+    "user-research",
+    "product-discovery",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Zentrik",
+    "shortDescription": "Ground product work in customer evidence",
+    "longDescription": "Search product context and customer evidence, trace decisions to source records, and capture approved evidence in one authorized Zentrik workspace.",
+    "developerName": "Zentrik",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://zentrik.ai/features/chatgpt-integration",
+    "privacyPolicyURL": "https://zentrik.ai/privacy",
+    "termsOfServiceURL": "https://zentrik.ai/terms",
+    "defaultPrompt": [
+      "Find recent customer evidence about reporting and fetch the most relevant result.",
+      "What customer problems repeat across recent evidence, and which opportunities do they support?",
+      "Save these customer notes as evidence in Zentrik, then confirm when processing is complete."
+    ],
+    "brandColor": "#00A3E0",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}
