@@ -1,6 +1,6 @@
 {
   "name": "zentrik",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Bring your team's product decisions and customer evidence into ChatGPT and Codex.",
   "author": {
     "name": "Zentrik",
@@ -23,7 +23,7 @@
   "interface": {
     "displayName": "Zentrik",
     "shortDescription": "Ground product work in customer evidence",
-    "longDescription": "Search product context and customer evidence, trace decisions to source records, and capture approved evidence in one authorized Zentrik workspace.",
+    "longDescription": "Use customer evidence to compare product ideas, prepare a decision brief, and plan or review private Studies in your authorized Zentrik workspace.",
     "developerName": "Zentrik",
     "category": "Productivity",
     "capabilities": [

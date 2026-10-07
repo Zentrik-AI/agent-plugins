@@ -13,9 +13,9 @@ Zentrik projects one authorization and product model into several interfaces. Th
 ## Compatibility contract
 
 - The portable package owns client-neutral metadata, MCP configuration, and reusable skills for the broad generic MCP endpoint.
-- `com.openai/zentrik` is an independently versioned OpenAI-specific adapter. Its `.app.json` maps to Zentrik's existing registered app, and it includes only skills whose required tools are part of the reviewed OpenAI snapshot.
-- The ChatGPT and Codex app profile is deliberately narrower than generic MCP. A tool appearing in generic MCP or REST does not automatically make it part of the reviewed app profile.
-- Portable skills may lead the OpenAI adapter when generic MCP already supports them. Add a skill to the adapter only in the same reviewed release as its required OpenAI tools.
+- `com.openai/zentrik` is an independently versioned OpenAI-specific adapter. Its `.app.json` maps to Zentrik's existing registered app, and it includes only skills whose required tools are available in the published ChatGPT profile.
+- The ChatGPT and Codex app profile is deliberately narrower than generic MCP. A tool appearing in generic MCP or REST does not automatically make it part of the app profile.
+- Portable skills may lead the OpenAI adapter when generic MCP already supports them. Add a skill to the adapter only after its required tools pass continuous MCP review and are available in the published app. Listing metadata and bundled skills need a separate metadata submission.
 - REST resources are versioned integration contracts. MCP tools are conversational operations and can combine several underlying product actions.
 - All interactive surfaces preserve the connected user's workspace membership, role, and granted OAuth scopes. The package contains no credentials.
 

@@ -4,17 +4,17 @@ Connect an AI agent to the product decisions, customer evidence, and product con
 
 The repository root follows the [Agent Plugins](https://agent-plugins.org/) v1 format and bundles the production Zentrik Streamable HTTP MCP server with four reusable workflows:
 
-- `brief-product-work` — ground planning, scoping, building, and review in the workspace's existing evidence.
-- `set-up-product-workspace` — inspect a workspace and apply only an approved, bounded setup delta.
-- `import-product-evidence` — capture supplied calls, tickets, reviews, feedback, or research with an approval step before writes.
-- `manage-product-study` — plan, refine, and review a private Study through evidence-grounded draft findings.
+- `brief-product-work`: ground planning, scoping, building, and review in the workspace's existing evidence.
+- `set-up-product-workspace`: inspect a workspace and apply only an approved, bounded setup delta.
+- `import-product-evidence`: capture supplied calls, tickets, reviews, feedback, or research with an approval step before writes.
+- `manage-product-study`: plan, refine, and review a private Study through evidence-grounded draft findings.
 
 The plugin contains no credentials and no local executable code. The MCP server authenticates through Zentrik OAuth, binds each connection to one selected workspace, and enforces the connected user's role and granted scopes.
 
 ## Choose the right surface
 
 - Portable Agent Plugins clients load the repository root and connect to the broad `https://zentrik.ai/mcp` endpoint.
-- Codex loads the OpenAI adapter at `com.openai/zentrik`, which maps to the reviewed Zentrik app already available to ChatGPT and Codex. The adapter remains on the reviewed three-workflow snapshot until OpenAI approves Study tools and the Study skill together.
+- Codex loads the OpenAI adapter at `com.openai/zentrik`, which maps to the registered Zentrik app available to ChatGPT and Codex. Both packages include the four workflows above; the app uses the narrower ChatGPT tool profile.
 - MCP-only clients can connect directly to `https://zentrik.ai/mcp` and complete Zentrik OAuth.
 - Server-to-server automation should use the versioned REST API at `/external/v1` with a scoped API key. The REST API is documented separately and is not bundled in this plugin.
 
