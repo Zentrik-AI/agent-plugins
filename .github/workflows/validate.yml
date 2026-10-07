@@ -111,9 +111,8 @@ jobs:
               manifest = json.loads(package.read('.codex-plugin/plugin.json'))
               assert manifest['name'] == 'app-6a51ef5c6e648191b549bff1c57bfdd6', 'Existing directory identity'
               assert 'apps' not in manifest and '.app.json' not in package.namelist()
-              assert manifest['mcpServers'] == './.mcp.json'
-              assert json.loads(package.read('.mcp.json')) == {'mcpServers': {'zentrik': {'url': 'https://zentrik.ai/mcp/chatgpt'}}}
+              assert 'mcpServers' not in manifest and '.mcp.json' not in package.namelist()
               assert len(manifest['interface']['shortDescription']) <= 30
               assert len([name for name in package.namelist() if name.endswith('/SKILL.md')]) == 4
-              assert all(name.startswith(('.codex-plugin/', 'skills/', 'assets/')) or name in ('.mcp.json', 'LICENSE', 'NOTICE') for name in package.namelist())
+              assert all(name.startswith(('.codex-plugin/', 'skills/', 'assets/')) or name in ('LICENSE', 'NOTICE') for name in package.namelist())
           PY

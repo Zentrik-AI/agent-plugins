@@ -23,10 +23,11 @@ manifest = json.loads((adapter / '.codex-plugin/plugin.json').read_text())
 # Preserve the published listing identity; the CLI marketplace keeps "zentrik".
 manifest['name'] = 'app-' + app_id.removeprefix('asdk_app_')
 manifest.pop('apps', None)
-manifest['mcpServers'] = './.mcp.json'
+# The original directory ZIP has no server declaration. Its MCP connection is
+# managed by the portal; redeclaring it here is rejected as a server change.
+manifest.pop('mcpServers', None)
 manifest['interface']['shortDescription'] = 'Evidence for product decisions'
 manifest['interface']['supportURL'] = 'https://zentrik.ai/contact'
-server = {'mcpServers': {'zentrik': {'url': 'https://zentrik.ai/mcp/chatgpt'}}}
 output.parent.mkdir(parents=True, exist_ok=True)
 with ZipFile(output, 'w', ZIP_DEFLATED) as package:
     for source in sorted(adapter.rglob('*')):
@@ -37,7 +38,6 @@ with ZipFile(output, 'w', ZIP_DEFLATED) as package:
             package.writestr(relative, json.dumps(manifest, indent=2) + '\n')
         elif relative.startswith(('assets/', 'skills/')):
             package.write(source, relative)
-    package.writestr('.mcp.json', json.dumps(server, indent=2) + '\n')
     for name in ('LICENSE', 'NOTICE'):
         package.write(repo / name, name)
 print(f'Packaged {manifest["name"]} {manifest["version"]}: {output}')
