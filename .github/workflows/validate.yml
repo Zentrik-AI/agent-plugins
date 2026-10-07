@@ -44,7 +44,7 @@ jobs:
           const manifest = readJson('plugin.json');
           if (manifest.$schema !== 'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json') fail('plugin schema');
           if (manifest.name !== 'zentrik') fail('plugin name');
-          if (manifest.version !== '1.4.1') fail('plugin version');
+          if (manifest.version !== '1.4.2') fail('plugin version');
           if (Object.keys(manifest).some((key) => !['$schema', 'name', 'version', 'description', 'author', 'homepage', 'repository', 'license', 'keywords', 'extensions'].includes(key))) fail('plugin fields');
           if (!manifest.extensions?.['com.openai'] || typeof manifest.extensions['com.openai'] !== 'object') fail('OpenAI extension namespace');
           pass('plugin manifest');
@@ -100,3 +100,16 @@ jobs:
           pass('legal files');
           if (process.exitCode) process.exit(1);
           NODE
+      - name: Validate OpenAI directory package
+        run: |
+          python3 scripts/package-openai-plugin.py --output "$RUNNER_TEMP/zentrik-openai.zip"
+          python3 - "$RUNNER_TEMP/zentrik-openai.zip" <<'PY'
+          import json
+          import sys
+          from zipfile import ZipFile
+          with ZipFile(sys.argv[1]) as package:
+              manifest = json.loads(package.read('.codex-plugin/plugin.json'))
+              assert manifest['name'] == 'app-6a51ef5c6e648191b549bff1c57bfdd6', 'Existing directory identity'
+              assert len([name for name in package.namelist() if name.endswith('/SKILL.md')]) == 4
+              assert all(name.startswith(('.codex-plugin/', 'skills/', 'assets/')) or name in ('.app.json', 'LICENSE', 'NOTICE') for name in package.namelist())
+          PY

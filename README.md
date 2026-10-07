@@ -31,6 +31,15 @@ codex plugin add zentrik@zentrik-agent-plugins
 
 The repository root remains the portable artifact. The marketplace entry points Codex at the client adapter under `com.openai/zentrik`; this keeps OpenAI-specific metadata out of the portable manifest.
 
+## OpenAI directory publication
+
+Run `python3 scripts/package-openai-plugin.py --output zentrik-openai.zip` to
+package the adapter for the existing directory listing. The packager derives
+its technical name from the registered app mapping and includes the four skills,
+assets, and license files. The CLI marketplace keeps the `zentrik` package name.
+Upload the ZIP as a new metadata and skills version in the existing listing;
+server-only changes use continuous MCP review.
+
 ## Requirements
 
 A Zentrik account and membership in at least one Zentrik workspace. No API key is required.
