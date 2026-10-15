@@ -78,7 +78,7 @@ jobs:
 
           const openAiRoot = 'com.openai/zentrik';
           const openAiManifest = readJson(path.join(openAiRoot, '.codex-plugin/plugin.json'));
-          if (openAiManifest.name !== 'zentrik' || openAiManifest.version !== '1.4.0') fail('OpenAI plugin identity');
+          if (openAiManifest.name !== 'zentrik' || openAiManifest.version !== '1.4.1') fail('OpenAI plugin identity');
           if (openAiManifest.skills !== './skills/' || openAiManifest.apps !== './.app.json') fail('OpenAI plugin resources');
           if (!['Interactive', 'Read', 'Write'].every((capability) => openAiManifest.interface?.capabilities?.includes(capability))) fail('OpenAI capabilities');
           if (openAiManifest.interface?.defaultPrompt?.length !== 3) fail('OpenAI starter prompts');
@@ -108,11 +108,19 @@ jobs:
           import sys
           from zipfile import ZipFile
           with ZipFile(sys.argv[1]) as package:
-              manifest = json.loads(package.read('.codex-plugin/plugin.json'))
+              manifest = json.loads(package.read('plugin.json'))
               assert manifest['name'] == 'app-6a51ef5c6e648191b549bff1c57bfdd6', 'Existing directory identity'
+              assert manifest['version'] == '1.4.1'
+              assert manifest['$schema'] == 'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json'
               assert 'apps' not in manifest and '.app.json' not in package.namelist()
-              assert 'mcpServers' not in manifest and '.mcp.json' not in package.namelist()
-              assert len(manifest['interface']['shortDescription']) <= 30
+              assert '.codex-plugin/plugin.json' not in package.namelist(), 'One authoritative manifest'
+              mcp = json.loads(package.read('mcp.json'))
+              assert mcp['$schema'] == 'https://agent-plugins.org/schemas/1.0.0/mcp.schema.json'
+              assert mcp['mcpServers'] == {'zentrik': {
+                  'type': 'streamable-http', 'url': 'https://zentrik.ai/mcp/chatgpt',
+                  'extensions': {'com.openai': {'auth': {'type': 'oauth'}}},
+              }}, 'Preserve the existing reviewed endpoint and OAuth discovery'
+              assert len(manifest['extensions']['com.openai']['interface']['shortDescription']) <= 30
               assert len([name for name in package.namelist() if name.endswith('/SKILL.md')]) == 4
-              assert all(name.startswith(('.codex-plugin/', 'skills/', 'assets/')) or name in ('LICENSE', 'NOTICE') for name in package.namelist())
+              assert all(name.startswith(('skills/', 'assets/')) or name in ('plugin.json', 'mcp.json', 'LICENSE', 'NOTICE') for name in package.namelist())
           PY
