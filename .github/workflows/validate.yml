@@ -118,8 +118,7 @@ jobs:
               assert mcp['$schema'] == 'https://agent-plugins.org/schemas/1.0.0/mcp.schema.json'
               assert mcp['mcpServers'] == {'zentrik': {
                   'type': 'streamable-http', 'url': 'https://zentrik.ai/mcp/chatgpt',
-                  'extensions': {'com.openai': {'auth': {'type': 'oauth'}}},
-              }}, 'Preserve the existing reviewed endpoint and OAuth discovery'
+              }}, 'Preserve the existing reviewed endpoint without overriding its configured authentication'
               assert len(manifest['extensions']['com.openai']['interface']['shortDescription']) <= 30
               assert len([name for name in package.namelist() if name.endswith('/SKILL.md')]) == 4
               assert all(name.startswith(('skills/', 'assets/')) or name in ('plugin.json', 'mcp.json', 'LICENSE', 'NOTICE') for name in package.namelist())
