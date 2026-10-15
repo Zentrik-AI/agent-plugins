@@ -36,8 +36,9 @@ The repository root remains the portable artifact. The marketplace entry points 
 Run `python3 scripts/package-openai-plugin.py --output zentrik-openai.zip` to
 package the adapter for the existing directory listing. The packager derives
 its technical name from the registered app mapping. The ZIP includes the four
-skills, assets, license files, and the existing ChatGPT MCP endpoint with OAuth
-discovery in the portable manifest format. Keep that endpoint in every update.
+skills, assets, license files, and the existing ChatGPT MCP endpoint in the
+portable manifest format. Keep that endpoint in every update; the existing
+listing owns its OAuth configuration, so the ZIP must not override it.
 The CLI marketplace keeps the `zentrik` name and registered app mapping.
 Upload the ZIP as a new metadata and skills version in the existing listing;
 server-only changes use continuous MCP review.

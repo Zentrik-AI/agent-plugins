@@ -44,7 +44,6 @@ mcp = {
     'mcpServers': {'zentrik': {
         'type': 'streamable-http',
         'url': 'https://zentrik.ai/mcp/chatgpt',
-        'extensions': {'com.openai': {'auth': {'type': 'oauth'}}},
     }},
 }
 output.parent.mkdir(parents=True, exist_ok=True)
