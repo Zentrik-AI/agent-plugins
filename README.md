@@ -20,6 +20,29 @@ The plugin contains no credentials and no local executable code. The MCP server 
 
 See [SURFACES.md](SURFACES.md) for the compatibility contract and the reason the available tools differ by surface.
 
+## GitHub Copilot and VS Code
+
+The server is published in the Official MCP Registry as `ai.zentrik/mcp`. To add it by hand, put this in `.vscode/mcp.json` (or your user MCP configuration):
+
+```json
+{
+  "servers": {
+    "zentrik": {
+      "type": "http",
+      "url": "https://zentrik.ai/mcp"
+    }
+  }
+}
+```
+
+Start the server, sign in to Zentrik in the browser window that opens, and pick the workspace this connection may use. Then ask Copilot in agent mode things like:
+
+- "What do customers say about bulk export? Cite the evidence."
+- "Brief me on the initiative behind this branch before I change it."
+- "Which open ideas have the most customer evidence this quarter?"
+
+Writes, such as importing evidence or updating a record, are limited to your Zentrik role and the scopes you granted.
+
 ## Codex CLI
 
 This repository includes a Codex marketplace catalog for local, Git, and team distribution:
