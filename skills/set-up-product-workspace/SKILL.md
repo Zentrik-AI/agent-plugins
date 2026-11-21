@@ -15,10 +15,13 @@ The goal is a trustworthy workspace that helps the team make and revisit product
 2. Ask for the smallest missing first-party source set needed to proceed. Useful sources include a product overview, product documentation, intended users, strategic goals, and representative customer or research material. Keep a source inventory and identify conflicts or stale claims.
 3. Route material to the correct surface:
    - canonical product facts, capabilities, and personas -> product model
-   - product-specific knowledge and constraints that change a product task -> reusable context; source material -> original source or document
+   - authorized originals -> existing source or a supported source collection
    - customer, user, and market observations -> Signals
-   - evidence-backed learning, problem space, solution, and delivery commitment -> Insight, Opportunity, Idea, and Initiative respectively
-4. Propose the smallest useful delta. Test each Context unit against a real product task: identify the relationship, constraint, or consequence that changes an interpretation, requirement, or trade-off across future work. It may synthesize facts from existing records; do not merely duplicate them. Keep generic expertise, setup notes, evaluation material, and repair archives out of customer Context. Preserve source material in its existing home or a supported document route; do not turn every file into a unit or assume an import retains paths and links. Keep Context empty when no knowledge qualifies. Preserve existing IDs, relationships, vocabulary, and supported content; do not force counts or setup sequences.
+   - evidence-backed learning and current work -> Insight, Opportunity, Idea, or Initiative
+4. Propose the smallest useful delta. Preserve existing IDs, relationships, vocabulary, and customer edits. Create no Context units, standalone documents, or Skills by default during initial setup.
+   - Add a unit when a real product task exposes a recurring gap in product, market, or business knowledge. It may explain a relationship or consequence across existing records.
+   - Add a Skill only for a reviewed recurring procedure the customer team owns. Check an import's paths, links, exclusions and proposed record mapping before applying it.
+   - Keep walkthroughs, sample reports, setup notes, and repair archives in the delivery asset or private work records.
 5. Show each phase for approval before writing. Check the available tools first. If product creation, product-level fields, context, or objectives are read-only, return an apply-ready proposal for the corresponding Zentrik surface. Do not attach material to a different product to work around a missing product write. Never misclassify unsupported content as a Signal or Discovery entity merely because a write tool exists there.
 6. Apply only approved changes with the narrowest supported write. Read back every result and retain returned public IDs. Use feature and persona mutations only for approved deltas.
 7. Import evidence one coherent source at a time after product scope is clear. Preserve source wording, provenance, dates, and stable external IDs. Resolve existing accounts exactly and keep account creation separate. Wait for processing before downstream synthesis.
